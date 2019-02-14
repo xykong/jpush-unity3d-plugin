@@ -1,28 +1,32 @@
 buildscript {
     repositories {
+        google()
         jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.3.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+//    buildToolsVersion "27.0.3"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -38,14 +42,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/unity-classes.jar')
-    compile files('libs/jcore-android-1.2.5.jar')
-    compile files('libs/jpush-android-3.1.6.jar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation files('libs/unity-classes.jar')
+    implementation files('libs/jcore-android-1.2.5.jar')
+    implementation files('libs/jpush-android-3.1.6.jar')
 }
 
 repositories {
-    flatDir{
+    flatDir {
         dirs 'libs'  //this way we can find the .aar file in libs folder
     }
 }
