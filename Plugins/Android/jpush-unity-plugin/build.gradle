@@ -22,7 +22,6 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 28
-//    buildToolsVersion "27.0.3"
 
     defaultConfig {
         minSdkVersion 14
@@ -43,13 +42,6 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation files('libs/unity-classes.jar')
-    implementation files('libs/jcore-android-1.2.5.jar')
-    implementation files('libs/jpush-android-3.1.6.jar')
-}
 
-repositories {
-    flatDir {
-        dirs 'libs'  //this way we can find the .aar file in libs folder
-    }
+    compileOnly fileTree(include: ['*.jar'], dir: 'refs')
 }
