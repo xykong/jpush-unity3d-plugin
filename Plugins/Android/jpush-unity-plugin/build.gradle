@@ -20,6 +20,12 @@ allprojects {
 
 apply plugin: 'com.android.library'
 
+Properties localProperties = new Properties()
+localProperties.load(project.rootProject.file('local.properties').newDataInputStream())
+ext.local = { key ->
+    return localProperties.hasProperty(key) ? localProperties.getProperty(key) : ""
+}
+
 android {
     compileSdkVersion 28
 
@@ -28,6 +34,12 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME: local('JPUSH_PKGNAME'),
+                XIAOMI_APPKEY: local('XIAOMI_APPKEY'),
+                XIAOMI_APPID : local('XIAOMI_APPID'),
+        ]
     }
     buildTypes {
         release {
@@ -44,4 +56,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     compileOnly fileTree(include: ['*.jar'], dir: 'refs')
+
+    // plugins 此版本插件仅支持JPushSDK3.1.8及以上版本
+    implementation 'cn.jiguang.sdk.plugin:xiaomi:3.1.8'
 }
