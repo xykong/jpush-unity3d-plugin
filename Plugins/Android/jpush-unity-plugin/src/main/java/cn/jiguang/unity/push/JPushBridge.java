@@ -1,5 +1,6 @@
 package cn.jiguang.unity.push;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -22,8 +23,10 @@ import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.data.JPushLocalNotification;
 
 
+@SuppressWarnings("unused")
 public class JPushBridge {
 
+    @SuppressLint("StaticFieldLeak")
     private static JPushBridge jpushBridge;
 
     private Context mContext;
@@ -158,15 +161,15 @@ public class JPushBridge {
     }
 
     public void cleanTags(int sequence) {
-      JPushInterface.cleanTags(mContext, sequence);
+        JPushInterface.cleanTags(mContext, sequence);
     }
 
     public void getAllTags(int sequence) {
         JPushInterface.getAllTags(mContext, sequence);
     }
 
-    public void checkTagBindState(int sequence , String tag) {
-        JPushInterface.checkTagBindState(mContext, sequence ,tag);
+    public void checkTagBindState(int sequence, String tag) {
+        JPushInterface.checkTagBindState(mContext, sequence, tag);
     }
 
     public void setAlias(int sequence, String alias) {
@@ -204,8 +207,7 @@ public class JPushBridge {
      * @param endHour     静音时段的结束时间 - 小时(范围：0 - 23)
      * @param endMinute   静音时段的结束时间 - 分钟(范围：0 - 59)
      */
-    public void setSilenceTime(int startHour, int startMinute, int endHour, int endMinute)
-            throws Exception {
+    public void setSilenceTime(int startHour, int startMinute, int endHour, int endMinute) {
         if (startHour < 0 || startHour > 23 || startMinute < 0 || startMinute > 59) {
             throw new IllegalArgumentException("开始时间不正确");
         }
