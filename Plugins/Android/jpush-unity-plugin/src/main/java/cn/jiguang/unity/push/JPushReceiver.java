@@ -24,6 +24,11 @@ public class JPushReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle bundle = intent.getExtras();
 
+        if (bundle == null) {
+            Log.e("JPushReceiver", "bundle is null, GameObject: " + JPushBridge.gameObject);
+            return;
+        }
+
         if (JPushInterface.ACTION_REGISTRATION_ID.equals(intent.getAction())) {
             String regId = bundle.getString(JPushInterface.EXTRA_REGISTRATION_ID);
             UnityPlayer.UnitySendMessage(JPushBridge.gameObject, "OnGetRegistrationId", regId);

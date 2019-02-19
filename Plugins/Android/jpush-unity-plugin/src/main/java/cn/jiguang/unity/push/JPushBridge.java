@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.meizu.cloud.pushsdk.notification.MPushMessage;
-import com.meizu.cloud.pushsdk.platform.message.BasicPushStatus;
 import com.unity3d.player.UnityPlayer;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
@@ -24,9 +22,6 @@ import cn.jpush.android.api.BasicPushNotificationBuilder;
 import cn.jpush.android.api.CustomPushNotificationBuilder;
 import cn.jpush.android.api.JPushInterface;
 import cn.jpush.android.data.JPushLocalNotification;
-import cn.jpush.android.service.PluginMeizuPlatformsReceiver;
-import cn.jpush.android.thirdpush.meizu.MeizuPushManager;
-import cn.jpush.android.thirdpush.meizu.NotifyOption;
 
 
 @SuppressWarnings("unused")
