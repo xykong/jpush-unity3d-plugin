@@ -1,4 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cn.jiguang.unity.push">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="cn.jiguang.unity.push"
+    android:versionCode="1"
+    android:versionName="3.1.8">
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="19"
+        tools:overrideLibrary="com.huawei.android.hms.base,com.huawei.android.hms.push,
+          com.google.android.gms.common.license,
+          com.google.android.gms.tasks.license,
+          com.google.firebase.firebase.common.license,
+          com.google.firebase.firebase.iid.license,
+          com.google.firebase.firebase.messaging.license,
+          com.google.firebase.measurement.impl.license,
+          com.google.firebase.measurement.license,
+          com.google.firebase.firebase_core,
+          com.google.firebase.measurement,
+          com.google.firebase.firebase_common,
+          com.google.firebase.messaging,
+          com.google.firebase.iid,
+          com.google.android.gms,
+          com.google.android.gms.tasks,
+          com.google.firebase.measurement_impl" />
+
+    <application>
+        <activity
+            android:name="com.huawei.hms.activity.BridgeActivity"
+            android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:hardwareAccelerated="true"
+            android:theme="@android:style/Theme.Translucent">
+            <meta-data
+                android:name="hwc-theme"
+                android:value="androidhwext:style/Theme.Emui.Translucent" />
+        </activity>
+        <!-- huawei start -->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="100526975" />
+
+        <provider
+            android:name="com.huawei.hms.update.provider.UpdateProvider"
+            android:authorities="com.tencent.tmgp.loveworld.lgrass.hms.update.provider"
+            android:exported="false"
+            android:grantUriPermissions="true" />
+
+        <receiver android:name="cn.jpush.android.service.PluginHuaweiPlatformsReceiver">
+            <intent-filter>
+
+                <!-- 必须,用于接收token -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" /> <!-- 必须,用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选,用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选,查看push通道是否连接,不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="CS_cloud_ablitity"
+                android:value="successRateAnalytics" />
+        </receiver>
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
+            <intent-filter>
+
+                <!-- 接收通道发来的通知栏消息,兼容老版本Push -->
+                <action android:name="com.huawei.intent.action.PUSH" />
+            </intent-filter>
+        </receiver>
+
+
+        <service android:name="cn.jpush.android.service.PluginFCMMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="cn.jpush.android.service.PluginFCMInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
 
 </manifest>
