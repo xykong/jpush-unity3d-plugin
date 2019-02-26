@@ -45,14 +45,21 @@ public class JPushBridge {
         return jpushBridge;
     }
 
+    private Context getContext() {
+        if (mContext == null) {
+            mContext = UnityPlayer.currentActivity.getApplicationContext();
+        }
+
+        return mContext;
+    }
+
     public void setDebug(boolean enable) {
         JPushInterface.setDebugMode(enable);
     }
 
     public void initPush(String gameObject) {
         JPushBridge.gameObject = gameObject;
-        mContext = UnityPlayer.currentActivity.getApplicationContext();
-        JPushInterface.init(mContext);
+        JPushInterface.init(getContext());
 
         if (!receiveNotiStrCache.isEmpty()) {
             for (String noti : receiveNotiStrCache) {
@@ -75,27 +82,27 @@ public class JPushBridge {
     }
 
     public void stopPush() {
-        JPushInterface.stopPush(mContext);
+        JPushInterface.stopPush(getContext());
     }
 
     public void resumePush() {
-        JPushInterface.resumePush(mContext);
+        JPushInterface.resumePush(getContext());
     }
 
     public boolean isPushStopped() {
-        return JPushInterface.isPushStopped(mContext);
+        return JPushInterface.isPushStopped(getContext());
     }
 
     public String getRegistrationId() {
-        return JPushInterface.getRegistrationID(mContext);
+        return JPushInterface.getRegistrationID(getContext());
     }
 
     public void initCrashHandler() {
-        JPushInterface.initCrashHandler(mContext);
+        JPushInterface.initCrashHandler(getContext());
     }
 
     public void stopCrashHandler() {
-        JPushInterface.stopCrashHandler(mContext);
+        JPushInterface.stopCrashHandler(getContext());
     }
 
     public void setTags(int sequence, String tagsJsonStr) {
@@ -116,7 +123,7 @@ public class JPushBridge {
             e.printStackTrace();
         }
 
-        JPushInterface.setTags(mContext, sequence, tagSet);
+        JPushInterface.setTags(getContext(), sequence, tagSet);
     }
 
     public void addTags(int sequence, String tagsJsonStr) {
@@ -137,7 +144,7 @@ public class JPushBridge {
             e.printStackTrace();
         }
 
-        JPushInterface.addTags(mContext, sequence, tagSet);
+        JPushInterface.addTags(getContext(), sequence, tagSet);
     }
 
     public void deleteTags(int sequence, String tagsJsonStr) {
@@ -158,31 +165,31 @@ public class JPushBridge {
             e.printStackTrace();
         }
 
-        JPushInterface.deleteTags(mContext, sequence, tagSet);
+        JPushInterface.deleteTags(getContext(), sequence, tagSet);
     }
 
     public void cleanTags(int sequence) {
-        JPushInterface.cleanTags(mContext, sequence);
+        JPushInterface.cleanTags(getContext(), sequence);
     }
 
     public void getAllTags(int sequence) {
-        JPushInterface.getAllTags(mContext, sequence);
+        JPushInterface.getAllTags(getContext(), sequence);
     }
 
     public void checkTagBindState(int sequence, String tag) {
-        JPushInterface.checkTagBindState(mContext, sequence, tag);
+        JPushInterface.checkTagBindState(getContext(), sequence, tag);
     }
 
     public void setAlias(int sequence, String alias) {
-        JPushInterface.setAlias(mContext, sequence, alias);
+        JPushInterface.setAlias(getContext(), sequence, alias);
     }
 
     public void deleteAlias(int sequence) {
-        JPushInterface.deleteAlias(mContext, sequence);
+        JPushInterface.deleteAlias(getContext(), sequence);
     }
 
     public void getAlias(int sequence) {
-        JPushInterface.getAlias(mContext, sequence);
+        JPushInterface.getAlias(getContext(), sequence);
     }
 
     public void setPushTime(String days, int startHour, int endHour) {
@@ -197,7 +204,7 @@ public class JPushBridge {
                 daysSet.add(Integer.parseInt(str));
             }
         }
-        JPushInterface.setPushTime(mContext, daysSet, startHour, endHour);
+        JPushInterface.setPushTime(getContext(), daysSet, startHour, endHour);
     }
 
     /**
@@ -217,7 +224,7 @@ public class JPushBridge {
             throw new IllegalArgumentException("结束时间不正确");
         }
 
-        JPushInterface.setSilenceTime(mContext, startHour, startMinute, endHour, endMinute);
+        JPushInterface.setSilenceTime(getContext(), startHour, startMinute, endHour, endMinute);
     }
 
     public void addLocalNotification(int builderId, String content, String title, int notId,
@@ -233,7 +240,7 @@ public class JPushBridge {
             ln.setExtras(extrasStr);
         }
 
-        JPushInterface.addLocalNotification(mContext, ln);
+        JPushInterface.addLocalNotification(getContext(), ln);
     }
 
     public void addLocalNotificationByDate(int builderId, String content, String title, int notId,
@@ -250,23 +257,23 @@ public class JPushBridge {
             localNotification.setExtras(extrasStr);
         }
 
-        JPushInterface.addLocalNotification(mContext, localNotification);
+        JPushInterface.addLocalNotification(getContext(), localNotification);
     }
 
     public void removeLocalNotification(int notificationId) {
-        JPushInterface.removeLocalNotification(mContext, notificationId);
+        JPushInterface.removeLocalNotification(getContext(), notificationId);
     }
 
     public void clearLocalNotifications() {
-        JPushInterface.clearLocalNotifications(mContext);
+        JPushInterface.clearLocalNotifications(getContext());
     }
 
     public void clearAllNotifications() {
-        JPushInterface.clearAllNotifications(mContext);
+        JPushInterface.clearAllNotifications(getContext());
     }
 
     public void clearNotificationById(int notificationId) {
-        JPushInterface.clearNotificationById(mContext, notificationId);
+        JPushInterface.clearNotificationById(getContext(), notificationId);
     }
 
     public void requestPermission() {
@@ -287,7 +294,7 @@ public class JPushBridge {
      */
     public void setBasicPushNotificationBuilder(int builderId, int notificationDefault,
                                                 int notificationFlags, String statusBarDrawableName) {
-        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(mContext);
+        BasicPushNotificationBuilder builder = new BasicPushNotificationBuilder(getContext());
 
         if (notificationDefault != -1) {
             builder.notificationDefaults = notificationDefault;
@@ -324,7 +331,7 @@ public class JPushBridge {
         int statusBarDrawableId = getResourceId(statusBarDrawableName, "drawable");
         int layoutIconDrawableId = getResourceId(layoutIconDrawableName, "drawable");
 
-        CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(mContext,
+        CustomPushNotificationBuilder builder = new CustomPushNotificationBuilder(getContext(),
                 layoutId, iconId, titleId, textId);
 
         if (statusBarDrawableId != 0) {
@@ -344,11 +351,11 @@ public class JPushBridge {
      * @param num 保留的通知条数。
      */
     public void setLatestNotificationNumber(int num) {
-        JPushInterface.setLatestNotificationNumber(mContext, num);
+        JPushInterface.setLatestNotificationNumber(getContext(), num);
     }
 
     public boolean getConnectionState() {
-        return JPushInterface.getConnectionState(mContext);
+        return JPushInterface.getConnectionState(getContext());
     }
 
     private boolean isNumeric(String str) {
@@ -360,10 +367,10 @@ public class JPushBridge {
         if (TextUtils.isEmpty(resourceName)) {
             return 0;
         }
-        return mContext.getResources().getIdentifier(resourceName, type, mContext.getPackageName());
+        return getContext().getResources().getIdentifier(resourceName, type, getContext().getPackageName());
     }
 
     public String xiaomiGetRegId() {
-        return MiPushClient.getRegId(mContext);
+        return MiPushClient.getRegId(getContext());
     }
 }
