@@ -58,6 +58,8 @@
                 <action android:name="com.huawei.android.push.intent.CLICK" />
                 <!-- 可选,查看push通道是否连接,不查看则不需要 -->
                 <action android:name="com.huawei.intent.action.PUSH_STATE" />
+                <!-- 必须, 用于接收通知栏消息点击事件 此事件不需要开发者处理，只需注册就可以-->
+                <action android:name="com.huawei.intent.action.PUSH_DELAY_NOTIFY" />
             </intent-filter>
 
             <meta-data
